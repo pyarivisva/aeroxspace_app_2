@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final destinations = tDestination;
+
     return MaterialApp(
       title: 'TourAja',
       theme: ThemeData(primarySwatch: Colors.blue),
@@ -21,7 +23,10 @@ class MyApp extends StatelessWidget {
       //   destination: tDestination[0],
       //   similarPlaces: tListSimilar,
       // ),
-      home: ListScreen(destinations: tDestination),
+      home: DestinationGrid(
+        gridCount: 2, // Contoh grid 2 kolom
+        destinations: destinations,
+      ),
     );
   }
 }
