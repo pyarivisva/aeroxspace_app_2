@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:aeroxspace_app_2/destination_model.dart';
+import 'package:aeroxspace_app_2/similar_model.dart';
 
 // Tampilan
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key});
+  final Destination destination;
+  final List<Similar> similarPlaces;
+
+  const DetailScreen({
+    required this.destination,
+    required this.similarPlaces,
+    super.key,
+  });
 
   @override
   DetailScreenState createState() => DetailScreenState();
@@ -30,23 +39,15 @@ class DetailScreenState extends State<DetailScreen> {
         ),
         backgroundColor: Colors.blue,
 
-        // Menu
+        // Back
         leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            // Aksi
+            Navigator.pop(context);
           },
         ),
-
-        // Search bar
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              // Aksi
-            },
-          ),
-        ],
+        // Favorite
+        actions: <Widget>[const FavoriteButton()],
       ),
 
       // Body
@@ -229,372 +230,100 @@ class DetailScreenState extends State<DetailScreen> {
                 ),
               ),
 
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: SizedBox(
-                  height: 240,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            width: 160,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(blurRadius: 10, offset: Offset(0, 5)),
-                              ],
+              ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: places.length,
+                itemBuilder: (context, index) {
+                  final place = places[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        width: 160,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(blurRadius: 10, offset: Offset(0, 5)),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              place.imagePath,
+                              height: 140,
+                              width: 160,
+                              fit: BoxFit.cover,
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  "images/waterbom.jpg",
-                                  height: 140,
-                                  width: 160,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Waterbom Bali",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    place.name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  RatingBarIndicator(
+                                    rating: place.rating,
+                                    itemBuilder:
+                                        (context, index) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
                                         ),
+                                    itemCount: 5,
+                                    itemSize: 10.0,
+                                    direction: Axis.horizontal,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.location_on,
+                                        size: 14,
+                                        color: Colors.red,
                                       ),
-                                      SizedBox(height: 4),
-                                      RatingBarIndicator(
-                                        rating: 4.7,
-                                        itemBuilder:
-                                            (context, index) => const Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                            ),
-                                        itemCount: 5,
-                                        itemSize: 10.0,
-                                        direction: Axis.horizontal,
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            size: 14,
-                                            color: Colors.red,
-                                          ),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Kuta, Bali",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.monetization_on, size: 14),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Rp 328.000",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        place.location,
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            width: 160,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(blurRadius: 10, offset: Offset(0, 5)),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  "images/atv.jpg",
-                                  height: 140,
-                                  width: 160,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  const SizedBox(height: 4),
+                                  Row(
                                     children: [
+                                      const Icon(
+                                        Icons.monetization_on,
+                                        size: 14,
+                                      ),
+                                      const SizedBox(width: 4),
                                       Text(
-                                        "Bali ATV Quad Bike",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                        place.price,
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12,
                                         ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          RatingBarIndicator(
-                                            rating: 5.0,
-                                            itemBuilder:
-                                                (context, index) => const Icon(
-                                                  Icons.star,
-                                                  color: Colors.amber,
-                                                ),
-                                            itemCount: 5,
-                                            itemSize: 10.0,
-                                            direction: Axis.horizontal,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            size: 14,
-                                            color: Colors.red,
-                                          ),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Ubud, Bali",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.monetization_on, size: 14),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Rp 340.000",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            width: 160,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(blurRadius: 10, offset: Offset(0, 5)),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  "images/tsm.jpg",
-                                  height: 140,
-                                  width: 160,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "TSM Theme Park",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          RatingBarIndicator(
-                                            rating: 4.6,
-                                            itemBuilder:
-                                                (context, index) => const Icon(
-                                                  Icons.star,
-                                                  color: Colors.amber,
-                                                ),
-                                            itemCount: 5,
-                                            itemSize: 10.0,
-                                            direction: Axis.horizontal,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            size: 14,
-                                            color: Colors.red,
-                                          ),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Denpasar, Bali",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.monetization_on, size: 14),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Rp 225.000",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            width: 160,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(blurRadius: 10, offset: Offset(0, 5)),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  "images/bali-farm.jpeg",
-                                  height: 140,
-                                  width: 160,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Bali Farm House",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          RatingBarIndicator(
-                                            rating: 4.7,
-                                            itemBuilder:
-                                                (context, index) => const Icon(
-                                                  Icons.star,
-                                                  color: Colors.amber,
-                                                ),
-                                            itemCount: 5,
-                                            itemSize: 10.0,
-                                            direction: Axis.horizontal,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            size: 14,
-                                            color: Colors.red,
-                                          ),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Singaraja, Bali",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.monetization_on, size: 14),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "Rp 112.000",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
 
               // Write review heading
@@ -747,6 +476,32 @@ class DetailScreenState extends State<DetailScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  FavoriteButtonState createState() => FavoriteButtonState();
+}
+
+class FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.red,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
     );
   }
 }
