@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../model/destination_model.dart';
-import '../model/similar_model.dart';
+import 'package:aeroxspace_app_2/model/destination_model.dart';
+import 'package:aeroxspace_app_2/model/similar_model.dart';
 
 class DetailScreen extends StatefulWidget {
   final Destination destination;

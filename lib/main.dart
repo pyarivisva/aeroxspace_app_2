@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       // home: const LoginScreen(),
       home: DetailScreen(
-        destination: tDestination,
+        destination: tDestination[0],
         similarPlaces: tListSimilar,
       ),
     );
