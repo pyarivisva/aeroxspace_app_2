@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:aeroxspace_app_2/destination_model.dart';
-import 'package:aeroxspace_app_2/similar_model.dart';
+import '../model/destination_model.dart';
+import '../model/similar_model.dart';
 
-// Tampilan
 class DetailScreen extends StatefulWidget {
   final Destination destination;
   final List<Similar> similarPlaces;
@@ -15,55 +14,38 @@ class DetailScreen extends StatefulWidget {
   });
 
   @override
-  DetailScreenState createState() => DetailScreenState();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class DetailScreenState extends State<DetailScreen> {
+class _DetailScreenState extends State<DetailScreen> {
   String review = "";
   String? ask;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Appbar
       appBar: AppBar(
-        // Title
         title: const Text(
           "TourAja",
           style: TextStyle(
-            // Font
             fontFamily: "SofiaSans",
-            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.blue,
-
-        // Back
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
-        // Favorite
-        actions: <Widget>[const FavoriteButton()],
       ),
-
-      // Body
       body: SafeArea(
-        // scroll
         child: SingleChildScrollView(
-          // column
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              // Image
-              Image.network(
-                "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
-              ),
+            children: [
+              Image.network(widget.destination.imageUrl),
 
-              // Headline
+              // Title & Rating
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -72,116 +54,82 @@ class DetailScreenState extends State<DetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Nama Destinasi
-                    const Text(
-                      "AeroXSpace",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
+                    Text(
+                      widget.destination.name,
+                      style: const TextStyle(
                         fontFamily: "SofiaSans",
                         fontSize: 25.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // jarak
-                    const SizedBox(width: 80),
-
-                    // Icon Rating
-                    RatingBarIndicator(
-                      rating: 4.5,
-                      // Fungsi itemBuilder
-                      itemBuilder:
-                          (context, index) =>
-                              const Icon(Icons.star, color: Colors.amber),
-                      itemCount: 5,
-                      itemSize: 24.0,
-                      direction: Axis.horizontal,
+                    Row(
+                      children: [
+                        RatingBarIndicator(
+                          rating: widget.destination.rating,
+                          itemBuilder:
+                              (context, _) =>
+                                  const Icon(Icons.star, color: Colors.amber),
+                          itemCount: 5,
+                          itemSize: 24.0,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          widget.destination.rating.toString(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
                     ),
+                  ],
+                ),
+              ),
 
-                    // Tulisan rating
-                    const Text(
-                      "4.5",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400,
+              // Location
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.location_on, size: 18, color: Colors.red),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        widget.destination.location,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                   ],
                 ),
               ),
 
-              // Lokasi
+              // Information
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 1.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // Icon lokasi
-                    const Icon(
-                      Icons.location_on,
-                      color: Colors.red,
-                      size: 18.0,
-                    ),
-
-                    const SizedBox(width: 5),
-
-                    // Lokasi
-                    Text(
-                      "Jl. Bypass Ngurah Rai No.999, Denpasar, Bali",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Informasi
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 15.0,
                   vertical: 25.0,
+                  horizontal: 15.0,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    // jadwal
-                    Column(
-                      children: const <Widget>[
-                        Icon(Icons.calendar_today),
-                        SizedBox(height: 8.0),
-                        Text('Everyday'),
-                      ],
+                  children: [
+                    _InfoColumn(
+                      icon: Icons.calendar_today,
+                      label: widget.destination.schedule,
                     ),
-                    // jam
-                    Column(
-                      children: const <Widget>[
-                        Icon(Icons.access_time),
-                        SizedBox(height: 8.0),
-                        Text('09:00 - 21:00'),
-                      ],
+                    _InfoColumn(
+                      icon: Icons.access_time,
+                      label: widget.destination.time,
                     ),
-                    // harga
-                    Column(
-                      children: const <Widget>[
-                        Icon(Icons.monetization_on),
-                        SizedBox(height: 8.0),
-                        Text('Rp 300.000'),
-                      ],
+                    _InfoColumn(
+                      icon: Icons.monetization_on,
+                      label: widget.destination.price,
                     ),
-                    // kontak
                     Column(
-                      children: <Widget>[
-                        Icon(Icons.call),
-                        SizedBox(height: 8.0),
+                      children: [
+                        const Icon(Icons.call),
+                        const SizedBox(height: 8),
                         TextButton(
-                          child: Text("Call"),
                           onPressed: () {
-                            // Aksi
+                            // Implement contact action
                           },
+                          child: const Text("Call"),
                         ),
                       ],
                     ),
@@ -189,141 +137,51 @@ class DetailScreenState extends State<DetailScreen> {
                 ),
               ),
 
-              // Deskripsi
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 2.0,
-                ),
+              // Description
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Description",
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
-                    SizedBox(height: 8.0),
-
+                    const SizedBox(height: 8),
                     Text(
-                      'Designed to inspire all ages to disconnect from their devices and improve their wellbeing and mental health through adrenaline-pumping activities. AeroXSpace is committed to creating the most exciting, imaginative, and fun family experience in Bali. Strategically located on Bali’s main artery bypass near the iconic Sanur neighborhood, AeroXSpace is a fully air-conditioned space-themed adventure park spans over 3,500 square meters and is located within a 6,000 square meter plot, with parking for up to 77 vehicles. Packed with 26 exhilarating multilevel attractions — some of which are the first in Indonesia — and adhering to the highest international safety codes.',
+                      widget.destination.description,
                       textAlign: TextAlign.justify,
-                      style: TextStyle(fontSize: 15.0),
+                      style: const TextStyle(fontSize: 15),
                     ),
                   ],
                 ),
               ),
 
-              // Heading Similar Experiences
-              Container(
-                margin: const EdgeInsets.symmetric(
+              // Similar Experiences
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
                   vertical: 15.0,
                 ),
-                child: Text(
+                child: const Text(
                   "Similar Experiences",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
 
-              ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: places.length,
-                itemBuilder: (context, index) {
-                  final place = places[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        width: 160,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(blurRadius: 10, offset: Offset(0, 5)),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              place.imagePath,
-                              height: 140,
-                              width: 160,
-                              fit: BoxFit.cover,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    place.name,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  RatingBarIndicator(
-                                    rating: place.rating,
-                                    itemBuilder:
-                                        (context, index) => const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                    itemCount: 5,
-                                    itemSize: 10.0,
-                                    direction: Axis.horizontal,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.location_on,
-                                        size: 14,
-                                        color: Colors.red,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        place.location,
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.monetization_on,
-                                        size: 14,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        place.price,
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              SizedBox(
+                height: 260,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.similarPlaces.length,
+                  itemBuilder: (context, index) {
+                    final place = widget.similarPlaces[index];
+                    return _SimilarCard(place: place);
+                  },
+                ),
               ),
 
               // Write review heading
@@ -332,7 +190,7 @@ class DetailScreenState extends State<DetailScreen> {
                   horizontal: 16.0,
                   vertical: 15.0,
                 ),
-                child: Text(
+                child: const Text(
                   "Write a Review",
                   textAlign: TextAlign.start,
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -358,7 +216,7 @@ class DetailScreenState extends State<DetailScreen> {
                 ),
               ),
 
-              // Review
+              // Review input
               Container(
                 margin: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -368,7 +226,7 @@ class DetailScreenState extends State<DetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     TextField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Write your review...",
                         labelText: "Review",
                       ),
@@ -379,18 +237,18 @@ class DetailScreenState extends State<DetailScreen> {
                       },
                     ),
 
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                    // Teks pertanyaan
+                    // Question text
                     Container(
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: const Text(
                         "Would you recommend this place to your friends?",
                         style: TextStyle(fontSize: 15),
                       ),
                     ),
 
-                    // Radio
+                    // Radio buttons
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -410,7 +268,7 @@ class DetailScreenState extends State<DetailScreen> {
                                 const Text("Yes"),
                               ],
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Row(
                               children: [
                                 Radio<String>(
@@ -430,7 +288,7 @@ class DetailScreenState extends State<DetailScreen> {
                       ],
                     ),
 
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -445,34 +303,19 @@ class DetailScreenState extends State<DetailScreen> {
                       ),
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: const Text('Review sent!')),
+                          const SnackBar(content: Text('Review sent!')),
                         );
+                        // You can also reset inputs here if you want:
+                        // setState(() {
+                        //   review = "";
+                        //   ask = null;
+                        // });
                       },
                     ),
                   ],
                 ),
               ),
-
-              // Radio
             ],
-          ),
-        ),
-      ),
-
-      floatingActionButton: SizedBox(
-        width: 90,
-        height: 40,
-        child: FloatingActionButton(
-          backgroundColor: Colors.red,
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: const Text('Tickets have been booked!')),
-            );
-          },
-          child: const Text(
-            "Book Now",
-            style: TextStyle(color: Colors.white),
-            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -480,28 +323,98 @@ class DetailScreenState extends State<DetailScreen> {
   }
 }
 
-class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({super.key});
+class _InfoColumn extends StatelessWidget {
+  final IconData icon;
+  final String label;
 
-  @override
-  FavoriteButtonState createState() => FavoriteButtonState();
-}
-
-class FavoriteButtonState extends State<FavoriteButton> {
-  bool isFavorite = false;
+  const _InfoColumn({required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: Colors.red,
+    return Column(
+      children: [Icon(icon), const SizedBox(height: 8), Text(label)],
+    );
+  }
+}
+
+class _SimilarCard extends StatelessWidget {
+  final Similar place;
+
+  const _SimilarCard({required this.place});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 160,
+      margin: const EdgeInsets.only(left: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [BoxShadow(blurRadius: 5, offset: Offset(0, 5))],
       ),
-      onPressed: () {
-        setState(() {
-          isFavorite = !isFavorite;
-        });
-      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            place.imagePath,
+            width: 160,
+            height: 140,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  place.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                RatingBarIndicator(
+                  rating: place.rating,
+                  itemBuilder:
+                      (context, _) =>
+                          const Icon(Icons.star, color: Colors.amber),
+                  itemCount: 5,
+                  itemSize: 12,
+                  direction: Axis.horizontal,
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(Icons.location_on, size: 14, color: Colors.red),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        place.location,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(Icons.monetization_on, size: 14),
+                    const SizedBox(width: 4),
+                    Text(
+                      place.price,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

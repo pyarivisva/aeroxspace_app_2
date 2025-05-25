@@ -14,20 +14,34 @@ class Similar {
   });
 }
 
-final List<Similar> places = [
+// Dummy list
+var tListSimilar = [
   Similar(
     name: "Waterbom Bali",
-    location: "Kuta, Bali",
+    location: "Kuta",
     imagePath: "images/waterbom.jpg",
     rating: 4.7,
-    price: "Rp 328.000",
-  ),
-  Similar(
-    name: "Bounce Trampoline",
-    location: "Canggu, Bali",
-    imagePath: "images/bounce.jpg",
-    rating: 4.3,
     price: "Rp 250.000",
   ),
-  // Tambah data lainnya sesuai kebutuhan
+  Similar(
+    name: "Bali ATV Quad Bike",
+    location: "Ubud, Bali",
+    imagePath: "images/atv.jpg",
+    rating: 4.1,
+    price: "Rp 200.000",
+  ),
+  Similar(
+    name: "TSM Theme Park",
+    location: "Kuta",
+    imagePath: "images/tsm.jpg",
+    rating: 4.1,
+    price: "Rp 200.000",
+  ),
+  Similar(
+    name: "Bali Farm House",
+    location: "Kuta",
+    imagePath: "images/bali-farm.jpeg",
+    rating: 4.1,
+    price: "Rp 200.000",
+  ),
 ];
