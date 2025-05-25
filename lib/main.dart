@@ -1,7 +1,7 @@
 // import 'package:aeroxspace_app_2/detail_screen.dart';
 import 'package:aeroxspace_app_2/list_screen.dart';
 import 'package:flutter/material.dart';
-// import 'package:aeroxspace_app_2/model/destination_model.dart';
+import 'package:aeroxspace_app_2/model/destination_model.dart';
 // import 'package:aeroxspace_app_2/model/similar_model.dart';
 
 // import 'package:aeroxspace_app_2/login_screen.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       //   destination: tDestination[0],
       //   similarPlaces: tListSimilar,
       // ),
-      home: ListScreen(),
+      home: ListScreen(destinations: tDestination),
     );
   }
 }

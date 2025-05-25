@@ -4,15 +4,17 @@ import 'package:aeroxspace_app_2/model/destination_model.dart';
 import 'package:aeroxspace_app_2/model/similar_model.dart';
 
 class ListScreen extends StatelessWidget {
-  const ListScreen({super.key});
+  final List<Destination> destinations;
+
+  const ListScreen({required this.destinations, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Wisata Bandung. Size: ${MediaQuery.of(context).size.width}",
-          style: const TextStyle(
+        title: const Text(
+          "TourAja",
+          style: TextStyle(
             fontFamily: "SofiaSans",
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -21,13 +23,13 @@ class ListScreen extends StatelessWidget {
         backgroundColor: Colors.blue,
       ),
       body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
+        builder: (context, constraints) {
           if (constraints.maxWidth <= 600) {
-            return const DestinationList();
+            return DestinationList(destinations: destinations);
           } else if (constraints.maxWidth <= 1200) {
-            return const DestinationGrid(gridCount: 4);
+            return DestinationGrid(gridCount: 4, destinations: destinations);
           } else {
-            return const DestinationGrid(gridCount: 6);
+            return DestinationGrid(gridCount: 6, destinations: destinations);
           }
         },
       ),
@@ -36,21 +38,23 @@ class ListScreen extends StatelessWidget {
 }
 
 class DestinationList extends StatelessWidget {
-  const DestinationList({super.key});
+  final List<Destination> destinations;
+
+  const DestinationList({required this.destinations, super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: tDestination.length,
+      itemCount: destinations.length,
       itemBuilder: (context, index) {
-        final destination = tDestination[index];
+        final destination = destinations[index];
         return InkWell(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder:
-                    (context) => DetailScreen(
+                    (_) => DetailScreen(
                       destination: destination,
                       similarPlaces: tListSimilar,
                     ),
@@ -96,8 +100,13 @@ class DestinationList extends StatelessWidget {
 
 class DestinationGrid extends StatelessWidget {
   final int gridCount;
+  final List<Destination> destinations;
 
-  const DestinationGrid({required this.gridCount, super.key});
+  const DestinationGrid({
+    required this.gridCount,
+    required this.destinations,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -108,14 +117,14 @@ class DestinationGrid extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         children:
-            tDestination.map((destination) {
+            destinations.map((destination) {
               return InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder:
-                          (context) => DetailScreen(
+                          (_) => DetailScreen(
                             destination: destination,
                             similarPlaces: tListSimilar,
                           ),
