@@ -24,28 +24,39 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Appbar
       appBar: AppBar(
         title: const Text(
           "TourAja",
           style: TextStyle(
             fontFamily: "SofiaSans",
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.blue,
+
+        // Back button
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
+
+        // Favorite button
+        actions: <Widget>[const FavoriteButton()],
       ),
+
+      // Body
       body: SafeArea(
+        // Scroll
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Main image
               Image.network(widget.destination.imageUrl),
 
-              // Title & Rating
+              // Title & rating
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -55,6 +66,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
+                      // Nama destinasi
                       widget.destination.name,
                       style: const TextStyle(
                         fontFamily: "SofiaSans",
@@ -65,6 +77,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     Row(
                       children: [
                         RatingBarIndicator(
+                          // Rating
                           rating: widget.destination.rating,
                           itemBuilder:
                               (context, _) =>
@@ -72,10 +85,15 @@ class _DetailScreenState extends State<DetailScreen> {
                           itemCount: 5,
                           itemSize: 24.0,
                         ),
+
                         const SizedBox(width: 5),
+                        // Text rating
                         Text(
                           widget.destination.rating.toString(),
-                          style: const TextStyle(fontSize: 16),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ],
                     ),
@@ -83,24 +101,28 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
 
-              // Location
+              // Lokasi
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   children: [
                     const Icon(Icons.location_on, size: 18, color: Colors.red),
                     const SizedBox(width: 5),
+                    // Teks lokasi
                     Expanded(
                       child: Text(
                         widget.destination.location,
-                        style: const TextStyle(fontSize: 14),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
 
-              // Information
+              // Informasi
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 25.0,
@@ -137,7 +159,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
 
-              // Description
+              // Deskripsi
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
@@ -150,7 +172,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     const SizedBox(height: 8),
+
                     Text(
                       widget.destination.description,
                       textAlign: TextAlign.justify,
@@ -174,6 +198,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
               SizedBox(
                 height: 260,
+                // List similar yang discroll horizontal
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.similarPlaces.length,
@@ -305,11 +330,6 @@ class _DetailScreenState extends State<DetailScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Review sent!')),
                         );
-                        // You can also reset inputs here if you want:
-                        // setState(() {
-                        //   review = "";
-                        //   ask = null;
-                        // });
                       },
                     ),
                   ],
@@ -350,16 +370,25 @@ class _SimilarCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(blurRadius: 5, offset: Offset(0, 5))],
+        boxShadow: const [
+          BoxShadow(blurRadius: 6, offset: Offset(0, 3), color: Colors.black26),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            place.imagePath,
-            width: 160,
-            height: 140,
-            fit: BoxFit.cover,
+          // Clip gambar saja, bukan seluruh container
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            child: Image.asset(
+              place.imagePath,
+              width: 160,
+              height: 140,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8),
@@ -395,6 +424,7 @@ class _SimilarCard extends StatelessWidget {
                           fontSize: 12,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -415,6 +445,32 @@ class _SimilarCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  FavoriteButtonState createState() => FavoriteButtonState();
+}
+
+class FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.red,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
     );
   }
 }
