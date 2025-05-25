@@ -1,79 +1,102 @@
 import 'package:flutter/material.dart';
 import 'package:aeroxspace_app_2/detail_screen.dart';
 import 'package:aeroxspace_app_2/model/destination_model.dart';
+import 'package:aeroxspace_app_2/model/similar_model.dart';
 
-class DestinationGrid extends StatelessWidget {
-  final int gridCount;
-  final List<Destination> destinations;
-
-  const DestinationGrid({
-    super.key,
-    required this.gridCount,
-    required this.destinations,
-  });
+class ListScreen extends StatelessWidget {
+  const ListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: GridView.builder(
-        itemCount: destinations.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: gridCount,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.75,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "TourAja",
+          style: TextStyle(
+            fontFamily: "SofiaSans",
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        itemBuilder: (context, index) {
-          final destination = destinations[index];
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => DetailScreen(destination: destination),
+        backgroundColor: Colors.blue,
+      ),
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: tDestination.length,
+          padding: const EdgeInsets.all(16),
+          itemBuilder: (context, index) {
+            final destination = tDestination[index];
+
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => DetailScreen(
+                          destination: destination,
+                          similarPlaces: tListSimilar,
+                        ),
+                  ),
+                );
+              },
+              child: Card(
+                key: ValueKey(destination.name),
+                margin: const EdgeInsets.only(bottom: 16),
+                elevation: 4,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(4),
+                        bottomLeft: Radius.circular(4),
+                      ),
+                      child: Image.network(
+                        destination.imageUrl,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                        errorBuilder:
+                            (context, error, stackTrace) => Container(
+                              height: 100,
+                              width: 100,
+                              color: Colors.grey[300],
+                              child: const Icon(Icons.broken_image),
+                            ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              destination.name,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              destination.location,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            },
-            child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: Image.network(
-                      destination.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          destination.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          destination.location,
-                          style: const TextStyle(fontSize: 14),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

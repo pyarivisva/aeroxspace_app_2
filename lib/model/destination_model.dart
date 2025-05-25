@@ -40,7 +40,7 @@ var tDestination = [
   Destination(
     name: "Waterbom Bali",
     imageUrl:
-        "https://media-cdn.tripadvisor.com/media/photo-s/13/8e/4e/64/photo3jpg.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.7,
     location: "Kuta, Bali",
     schedule: "Everyday",
@@ -54,7 +54,7 @@ var tDestination = [
   Destination(
     name: "Bali ATV Quad Bike",
     imageUrl:
-        "https://balquadadventure.com/wp-content/uploads/2021/06/ATV-Bali-Tandem.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.5,
     location: "Ubud, Bali",
     schedule: "Everyday",
@@ -68,7 +68,7 @@ var tDestination = [
   Destination(
     name: "TSM Theme Park",
     imageUrl:
-        "https://awsimages.detik.net.id/community/media/visual/2023/07/13/trans-studio-mini-1_169.jpeg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 3.9,
     location: "Badung, Bali",
     schedule: "Everyday",
@@ -82,7 +82,7 @@ var tDestination = [
   Destination(
     name: "Bali Farm House",
     imageUrl:
-        "https://img.inews.co.id/media/822/files/inews_new/2022/12/15/Farm_House_Susu_Lembang.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.2,
     location: "Bedugul, Bali",
     schedule: "Everyday",
@@ -108,7 +108,7 @@ var tDestination = [
   Destination(
     name: "Waterbom Bali",
     imageUrl:
-        "https://media-cdn.tripadvisor.com/media/photo-s/13/8e/4e/64/photo3jpg.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.7,
     location: "Kuta, Bali",
     schedule: "Everyday",
@@ -122,7 +122,7 @@ var tDestination = [
   Destination(
     name: "Bali ATV Quad Bike",
     imageUrl:
-        "https://balquadadventure.com/wp-content/uploads/2021/06/ATV-Bali-Tandem.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.5,
     location: "Ubud, Bali",
     schedule: "Everyday",
@@ -136,7 +136,7 @@ var tDestination = [
   Destination(
     name: "TSM Theme Park",
     imageUrl:
-        "https://awsimages.detik.net.id/community/media/visual/2023/07/13/trans-studio-mini-1_169.jpeg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 3.9,
     location: "Badung, Bali",
     schedule: "Everyday",
@@ -150,7 +150,7 @@ var tDestination = [
   Destination(
     name: "Bali Farm House",
     imageUrl:
-        "https://img.inews.co.id/media/822/files/inews_new/2022/12/15/Farm_House_Susu_Lembang.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.2,
     location: "Bedugul, Bali",
     schedule: "Everyday",
@@ -176,7 +176,7 @@ var tDestination = [
   Destination(
     name: "Waterbom Bali",
     imageUrl:
-        "https://media-cdn.tripadvisor.com/media/photo-s/13/8e/4e/64/photo3jpg.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.7,
     location: "Kuta, Bali",
     schedule: "Everyday",
@@ -190,7 +190,7 @@ var tDestination = [
   Destination(
     name: "Bali ATV Quad Bike",
     imageUrl:
-        "https://balquadadventure.com/wp-content/uploads/2021/06/ATV-Bali-Tandem.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.5,
     location: "Ubud, Bali",
     schedule: "Everyday",
@@ -204,7 +204,7 @@ var tDestination = [
   Destination(
     name: "TSM Theme Park",
     imageUrl:
-        "https://awsimages.detik.net.id/community/media/visual/2023/07/13/trans-studio-mini-1_169.jpeg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 3.9,
     location: "Badung, Bali",
     schedule: "Everyday",
@@ -218,7 +218,7 @@ var tDestination = [
   Destination(
     name: "Bali Farm House",
     imageUrl:
-        "https://img.inews.co.id/media/822/files/inews_new/2022/12/15/Farm_House_Susu_Lembang.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.2,
     location: "Bedugul, Bali",
     schedule: "Everyday",
@@ -244,7 +244,7 @@ var tDestination = [
   Destination(
     name: "Waterbom Bali",
     imageUrl:
-        "https://media-cdn.tripadvisor.com/media/photo-s/13/8e/4e/64/photo3jpg.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.7,
     location: "Kuta, Bali",
     schedule: "Everyday",
@@ -258,7 +258,7 @@ var tDestination = [
   Destination(
     name: "Bali ATV Quad Bike",
     imageUrl:
-        "https://balquadadventure.com/wp-content/uploads/2021/06/ATV-Bali-Tandem.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.5,
     location: "Ubud, Bali",
     schedule: "Everyday",
@@ -272,7 +272,7 @@ var tDestination = [
   Destination(
     name: "TSM Theme Park",
     imageUrl:
-        "https://awsimages.detik.net.id/community/media/visual/2023/07/13/trans-studio-mini-1_169.jpeg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 3.9,
     location: "Badung, Bali",
     schedule: "Everyday",
@@ -286,7 +286,7 @@ var tDestination = [
   Destination(
     name: "Bali Farm House",
     imageUrl:
-        "https://img.inews.co.id/media/822/files/inews_new/2022/12/15/Farm_House_Susu_Lembang.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/c8/2b/23/stellar-trapeze.jpg?w=1400&h=-1&s=1",
     rating: 4.2,
     location: "Bedugul, Bali",
     schedule: "Everyday",

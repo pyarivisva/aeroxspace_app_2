@@ -1,10 +1,6 @@
-// import 'package:aeroxspace_app_2/detail_screen.dart';
-import 'package:aeroxspace_app_2/list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:aeroxspace_app_2/model/destination_model.dart';
-// import 'package:aeroxspace_app_2/model/similar_model.dart';
-
-// import 'package:aeroxspace_app_2/login_screen.dart';
+// import 'package:aeroxspace_app_2/list_screen.dart';
+import 'package:aeroxspace_app_2/login_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,20 +9,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final destinations = tDestination;
-
     return MaterialApp(
       title: 'TourAja',
       theme: ThemeData(primarySwatch: Colors.blue),
-      // home: const LoginScreen(),
-      // home: DetailScreen(
-      //   destination: tDestination[0],
-      //   similarPlaces: tListSimilar,
-      // ),
-      home: DestinationGrid(
-        gridCount: 2, // Contoh grid 2 kolom
-        destinations: destinations,
-      ),
+      debugShowCheckedModeBanner: false,
+      home: const LoginScreen(),
     );
   }
 }

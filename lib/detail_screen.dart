@@ -5,8 +5,13 @@ import 'package:aeroxspace_app_2/model/similar_model.dart';
 
 class DetailScreen extends StatefulWidget {
   final Destination destination;
+  final List<Similar> similarPlaces;
 
-  const DetailScreen({super.key, required this.destination});
+  const DetailScreen({
+    required this.destination,
+    required this.similarPlaces,
+    super.key,
+  });
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -19,6 +24,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Appbar
       appBar: AppBar(
         title: const Text(
           "TourAja",
@@ -29,71 +35,64 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ),
         backgroundColor: Colors.blue,
+
+        // Back button
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: const [FavoriteButton()],
+
+        // Favorite button
+        actions: <Widget>[const FavoriteButton()],
       ),
+
+      // Body
       body: SafeArea(
+        // Scroll
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Main image
               Image.network(widget.destination.imageUrl),
+
+              // Title & rating
               Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            widget.destination.name,
-                            style: const TextStyle(
-                              fontFamily: "SofiaSans",
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            RatingBarIndicator(
-                              rating: widget.destination.rating,
-                              itemBuilder:
-                                  (_, __) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                              itemCount: 5,
-                              itemSize: 24,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              widget.destination.rating.toString(),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ],
+                    Text(
+                      // Nama destinasi
+                      widget.destination.name,
+                      style: const TextStyle(
+                        fontFamily: "SofiaSans",
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.location_on,
-                          size: 18,
-                          color: Colors.red,
+                        RatingBarIndicator(
+                          // Rating
+                          rating: widget.destination.rating,
+                          itemBuilder:
+                              (context, _) =>
+                                  const Icon(Icons.star, color: Colors.amber),
+                          itemCount: 5,
+                          itemSize: 24.0,
                         ),
+
                         const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            widget.destination.location,
-                            style: const TextStyle(fontSize: 14),
+                        // Text rating
+                        Text(
+                          widget.destination.rating.toString(),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ],
@@ -101,8 +100,34 @@ class _DetailScreenState extends State<DetailScreen> {
                   ],
                 ),
               ),
+
+              // Lokasi
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.location_on, size: 18, color: Colors.red),
+                    const SizedBox(width: 5),
+                    // Teks lokasi
+                    Expanded(
+                      child: Text(
+                        widget.destination.location,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Informasi
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 25.0,
+                  horizontal: 15.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -122,17 +147,21 @@ class _DetailScreenState extends State<DetailScreen> {
                       children: [
                         const Icon(Icons.call),
                         const SizedBox(height: 8),
-                        TextButton(onPressed: () {}, child: const Text("Call")),
+                        TextButton(
+                          onPressed: () {
+                            // Implement contact action
+                          },
+                          child: const Text("Call"),
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
+
+              // Deskripsi
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 15,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -143,7 +172,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     const SizedBox(height: 8),
+
                     Text(
                       widget.destination.description,
                       textAlign: TextAlign.justify,
@@ -152,93 +183,139 @@ class _DetailScreenState extends State<DetailScreen> {
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
-                child: Text(
+
+              // Similar Experiences
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 15.0,
+                ),
+                child: const Text(
                   "Similar Experiences",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
+
               SizedBox(
                 height: 260,
+                // List similar yang discroll horizontal
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: tListSimilar.length,
+                  itemCount: widget.similarPlaces.length,
                   itemBuilder: (context, index) {
-                    final place = tListSimilar[index];
+                    final place = widget.similarPlaces[index];
                     return _SimilarCard(place: place);
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 15,
+
+              // Write review heading
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 15.0,
                 ),
                 child: const Text(
                   "Write a Review",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
-              Center(
-                child: RatingBarIndicator(
-                  rating: 5.0,
-                  itemBuilder:
-                      (_, __) => const Icon(Icons.star, color: Colors.amber),
-                  itemCount: 5,
-                  itemSize: 45.0,
+
+              // Rating
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 15.0,
+                  vertical: 10.0,
+                ),
+                child: Center(
+                  child: RatingBarIndicator(
+                    rating: 5.0,
+                    itemBuilder:
+                        (context, index) =>
+                            const Icon(Icons.star, color: Colors.amber),
+                    itemCount: 5,
+                    itemSize: 45.0,
+                    direction: Axis.horizontal,
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+
+              // Review input
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 10.0,
+                ),
                 child: Column(
-                  children: [
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
                     TextField(
                       decoration: const InputDecoration(
                         hintText: "Write your review...",
                         labelText: "Review",
                       ),
-                      onChanged: (value) => setState(() => review = value),
+                      onChanged: (String value) {
+                        setState(() {
+                          review = value;
+                        });
+                      },
                     ),
-                    const SizedBox(height: 20),
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
+
+                    const SizedBox(height: 30),
+
+                    // Question text
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: const Text(
                         "Would you recommend this place to your friends?",
+                        style: TextStyle(fontSize: 15),
                       ),
                     ),
+
+                    // Radio buttons
                     Row(
-                      children: [
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         Row(
-                          children: [
-                            Radio<String>(
-                              value: "Yes",
-                              groupValue: ask,
-                              onChanged: (value) => setState(() => ask = value),
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Radio<String>(
+                                  value: "Yes",
+                                  groupValue: ask,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      ask = value;
+                                    });
+                                  },
+                                ),
+                                const Text("Yes"),
+                              ],
                             ),
-                            const Text("Yes"),
-                          ],
-                        ),
-                        const SizedBox(width: 20),
-                        Row(
-                          children: [
-                            Radio<String>(
-                              value: "No",
-                              groupValue: ask,
-                              onChanged: (value) => setState(() => ask = value),
+                            const SizedBox(width: 20),
+                            Row(
+                              children: [
+                                Radio<String>(
+                                  value: "No",
+                                  groupValue: ask,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      ask = value;
+                                    });
+                                  },
+                                ),
+                                const Text("No"),
+                              ],
                             ),
-                            const Text("No"),
                           ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+
+                    const SizedBox(height: 30),
+
                     ElevatedButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Review sent!')),
-                        );
-                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                       ),
@@ -249,6 +326,11 @@ class _DetailScreenState extends State<DetailScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Review sent!')),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -295,8 +377,12 @@ class _SimilarCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Clip gambar saja, bukan seluruh container
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
             child: Image.asset(
               place.imagePath,
               width: 160,
@@ -320,9 +406,11 @@ class _SimilarCard extends StatelessWidget {
                 RatingBarIndicator(
                   rating: place.rating,
                   itemBuilder:
-                      (_, __) => const Icon(Icons.star, color: Colors.amber),
+                      (context, _) =>
+                          const Icon(Icons.star, color: Colors.amber),
                   itemCount: 5,
                   itemSize: 12,
+                  direction: Axis.horizontal,
                 ),
                 const SizedBox(height: 4),
                 Row(
@@ -365,10 +453,10 @@ class FavoriteButton extends StatefulWidget {
   const FavoriteButton({super.key});
 
   @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
+  FavoriteButtonState createState() => FavoriteButtonState();
 }
 
-class _FavoriteButtonState extends State<FavoriteButton> {
+class FavoriteButtonState extends State<FavoriteButton> {
   bool isFavorite = false;
 
   @override
@@ -378,7 +466,11 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         isFavorite ? Icons.favorite : Icons.favorite_border,
         color: Colors.red,
       ),
-      onPressed: () => setState(() => isFavorite = !isFavorite),
+      onPressed: () {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
     );
   }
 }
