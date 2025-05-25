@@ -14,7 +14,7 @@ class Similar {
   });
 }
 
-// Dummy list
+// Dummy
 var tListSimilar = [
   Similar(
     name: "Waterbom Bali",

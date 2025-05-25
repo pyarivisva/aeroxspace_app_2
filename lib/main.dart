@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:aeroxspace_app_2/list_screen.dart';
 import 'package:aeroxspace_app_2/login_screen.dart';
 
 void main() => runApp(const MyApp());

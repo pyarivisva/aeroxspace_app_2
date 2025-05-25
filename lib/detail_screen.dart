@@ -35,12 +35,7 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ),
         backgroundColor: Colors.blue,
-
-        // Back button
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
+        iconTheme: const IconThemeData(color: Colors.white),
 
         // Favorite button
         actions: <Widget>[const FavoriteButton()],
@@ -209,7 +204,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
 
-              // Write review heading
+              // Heading review
               Container(
                 margin: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -264,7 +259,6 @@ class _DetailScreenState extends State<DetailScreen> {
 
                     const SizedBox(height: 30),
 
-                    // Question text
                     Container(
                       alignment: Alignment.topLeft,
                       child: const Text(
@@ -273,7 +267,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                     ),
 
-                    // Radio buttons
+                    // Radio button
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -377,7 +371,6 @@ class _SimilarCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Clip gambar saja, bukan seluruh container
           ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(10),
